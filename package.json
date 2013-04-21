@@ -1,6 +1,6 @@
 {
   "name": "grunt-replace-dojo-cache",
-  "description": "The best Grunt plugin ever.",
+  "description": "Replace calls to dojo.cache in JavaScript source with the contents of the referred file.",
   "version": "0.1.0",
   "homepage": "https://github.com/bvanreeven/grunt-replace-dojo-cache",
   "author": {
