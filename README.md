@@ -1,6 +1,6 @@
 # grunt-replace-dojo-cache
 
-> The best Grunt plugin ever.
+> Replace calls to dojo.cache in JavaScript source with the contents of the referred file.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
