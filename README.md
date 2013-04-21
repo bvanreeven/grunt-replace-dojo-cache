@@ -37,46 +37,25 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
+#### options.basePath
 Type: `String`
 Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+The base path for files referred from dojo.cache calls. Default is the path Gruntfile.js is in.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  replace_dojo_cache: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+#### Custom Base Path
+In this example, the file `'src/source.js'` is scanned for calls to dojo.cache. Referred files are resolved relative to the base path `'src'`.
 
 ```js
 grunt.initConfig({
   replace_dojo_cache: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      basePath: 'src'
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+      'dest/replaced.js': ['src/source.js'],
     },
   },
 })
