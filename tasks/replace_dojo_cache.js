@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       var regex = /dojo\.cache\(['"]([a-zA-Z.]+)['"]\s*,\s*['"]([a-zA-Z.]+)['"]\)/g;
       var src = grunt.file.read(f.src[0]).replace(regex, function (match, packageName, fileName) {
 
-        var cacheFilePath = path.join(options.basePath, packageName.replace(".", "/"), fileName);
+        var cacheFilePath = path.join(options.basePath, packageName.replace(/\./g, "/"), fileName);
 
         grunt.verbose.writeln("Matched dojo.cache call: " + match);
         grunt.verbose.writeln("Replacing with contents of file " + cacheFilePath);

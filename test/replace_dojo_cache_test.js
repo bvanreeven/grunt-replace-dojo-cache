@@ -44,5 +44,14 @@ exports.replace_dojo_cache = {
     test.equal(actual, expected, 'support for paths relative to basePath option.');
 
     test.done();
+  },
+  widget_sub: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/widget_sub.js');
+    var expected = grunt.file.read('test/expected/widget_sub.js');
+    test.equal(actual, expected, 'multiple dots in package name.');
+
+    test.done();
   }
 };

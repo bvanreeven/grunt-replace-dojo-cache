@@ -45,6 +45,13 @@ module.exports = function(grunt) {
           'tmp/widget_relative.js': ['test/fixtures/widget_relative.js'],
         },
       },
+      widget_sub: {
+        options: {
+        },
+        files: {
+          'tmp/widget_sub.js': ['test/fixtures/widget_sub.js'],
+        },
+      },
       // too_many_files: {
       //   options: {
       //   },
