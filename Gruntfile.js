@@ -30,22 +30,20 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     replace_dojo_cache: {
-      default_options: {
+      widget: {
         options: {
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'tmp/widget.js': ['test/fixtures/widget.js'],
         },
       },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+      // too_many_files: {
+      //   options: {
+      //   },
+      //   files: {
+      //     'tmp/nope.js': ['test/fixtures/widget.js', 'test/fixtures/fake.js'],
+      //   },
+      // },
     },
 
     // Unit tests.

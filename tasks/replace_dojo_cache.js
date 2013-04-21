@@ -8,42 +8,48 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('replace_dojo_cache', 'Your task description goes here.', function() {
+  grunt.registerMultiTask('replace_dojo_cache', 'Replace dojo.cache calls with their file contents.', function () {
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+    var options = this.options({});
 
     // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+    this.files.forEach(function (f) {
+      if (f.src.length !== 1) {
+        grunt.fail.fatal("Must specify exactly one source file per destination.");
+        return;
+      }
 
-      // Handle options.
-      src += options.punctuation;
+      if (!grunt.file.exists(f.src[0])) {
+        grunt.log.warn('Source file "' + f.src[0] + '" not found.');
+        return;
+      }
+
+      var regex = /dojo\.cache\(['"]([a-zA-Z.]+)['"]\s*,\s*['"]([a-zA-Z.]+)['"]\)/g;
+      var src = grunt.file.read(f.src[0]).replace(regex, function (match, packageName, fileName) {
+
+        var cacheFilePath = packageName.replace(".", "/") + "/" + fileName;
+
+        grunt.verbose.writeln("Matched dojo.cache call: " + match);
+        grunt.verbose.writeln("Replacing with contents of file " + cacheFilePath);
+
+        if (!grunt.file.exists(cacheFilePath)) {
+          grunt.log.warn('Cached file "' + cacheFilePath + '" not found.');
+          return;
+        }
+
+        return JSON.stringify(grunt.file.read(cacheFilePath));
+      });
 
       // Write the destination file.
       grunt.file.write(f.dest, src);
 
       // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+      grunt.verbose.writeln('File "' + f.dest + '" created.');
     });
   });
 
