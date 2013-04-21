@@ -35,5 +35,14 @@ exports.replace_dojo_cache = {
     test.equal(actual, expected, 'replace dojo.cache() call by file contents.');
 
     test.done();
+  },
+  widget_relative: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/widget_relative.js');
+    var expected = grunt.file.read('test/expected/widget_relative.js');
+    test.equal(actual, expected, 'support for paths relative to basePath option.');
+
+    test.done();
   }
 };
