@@ -21,20 +21,14 @@ module.exports = function (grunt) {
       basePath: '.'
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function (f) {
-      if (f.src.length !== 1) {
-        grunt.fail.fatal("Must specify exactly one source file per destination.");
-        return;
-      }
+    var replaceRequires = function (src) {
+      var regex = /^\s*dojo\.require\(['"]dojo\.cache['"]\);$/gm;
+      return src.replace(regex, "");
+    };
 
-      if (!grunt.file.exists(f.src[0])) {
-        grunt.fail.fatal('Source file "' + f.src[0] + '" not found.');
-        return;
-      }
-
+    var replaceCalls = function (src) {
       var regex = /dojo\.cache\(['"]([a-zA-Z.]+)['"]\s*,\s*['"]([a-zA-Z.]+)['"]\)/g;
-      var src = grunt.file.read(f.src[0]).replace(regex, function (match, packageName, fileName) {
+      return src.replace(regex, function (match, packageName, fileName) {
 
         var cacheFilePath = path.join(options.basePath, packageName.replace(/\./g, "/"), fileName);
 
@@ -48,6 +42,23 @@ module.exports = function (grunt) {
 
         return JSON.stringify(grunt.file.read(cacheFilePath));
       });
+    };
+
+    // Iterate over all specified file groups.
+    this.files.forEach(function (f) {
+      if (f.src.length !== 1) {
+        grunt.fail.fatal("Must specify exactly one source file per destination.");
+        return;
+      }
+
+      if (!grunt.file.exists(f.src[0])) {
+        grunt.fail.fatal('Source file "' + f.src[0] + '" not found.');
+        return;
+      }
+
+      var src = grunt.file.read(f.src[0]);
+      src = replaceRequires(src);
+      src = replaceCalls(src);
 
       // Write the destination file.
       grunt.file.write(f.dest, src);
