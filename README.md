@@ -65,5 +65,6 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+ * 2013-04-25   v0.1.2   Remove `dojo.require("dojo.cache");` calls to prevent unnecessary requests.
  * 2013-04-21   v0.1.1   Added support for multiple dots in the package name.
  * 2013-04-21   v0.1.0   Initial version.

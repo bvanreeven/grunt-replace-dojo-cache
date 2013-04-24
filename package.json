@@ -1,7 +1,7 @@
 {
   "name": "grunt-replace-dojo-cache",
   "description": "Replace calls to dojo.cache in JavaScript source with the contents of the referred file.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/bvanreeven/grunt-replace-dojo-cache",
   "author": {
     "name": "Benny van Reeven",
